@@ -2,6 +2,7 @@
     "files.associations": {
         "*.tpp": "cpp",
         "*.roff": "troff",
-        "fatfs.h": "c"
+        "fatfs.h": "c",
+        "main.h": "c"
     }
 }

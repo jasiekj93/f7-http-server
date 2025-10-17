@@ -20,9 +20,9 @@ cube_dir := $(project_dir)/cube
 
 # Sources 
 cxx_sources :=  \
+$(wildcard *.cpp) \
 
 c_sources := \
-$(cube_dir)/Core/Src/main.c \
 $(cube_dir)/Core/Src/gpio.c \
 $(cube_dir)/Core/Src/sdmmc.c \
 $(cube_dir)/Core/Src/stm32f7xx_it.c \
