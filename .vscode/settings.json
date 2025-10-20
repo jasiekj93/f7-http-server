@@ -3,6 +3,7 @@
         "*.tpp": "cpp",
         "*.roff": "troff",
         "fatfs.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "sdmmc.h": "c"
     }
 }

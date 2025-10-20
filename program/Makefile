@@ -55,7 +55,18 @@ $(cube_dir)/Middlewares/Third_Party/FatFs/src/ff_gen_drv.c \
 $(cube_dir)/Middlewares/Third_Party/FatFs/src/option/syscall.c \
 $(cube_dir)/Middlewares/Third_Party/FatFs/src/option/ccsbcs.c \
 $(cube_dir)/Core/Src/sysmem.c \
-$(cube_dir)/Core/Src/syscalls.c  
+$(cube_dir)/Core/Src/syscalls.c \
+$(cube_dir)/USB_DEVICE/App/usb_device.c \
+$(cube_dir)/USB_DEVICE/App/usbd_desc.c \
+$(cube_dir)/USB_DEVICE/App/usbd_cdc_if.c \
+$(cube_dir)/USB_DEVICE/Target/usbd_conf.c \
+$(cube_dir)/Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd.c \
+$(cube_dir)/Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pcd_ex.c \
+$(cube_dir)/Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.c \
+$(cube_dir)/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
+$(cube_dir)/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
+$(cube_dir)/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
+$(cube_dir)/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
 
 asm_sources := \
 $(cube_dir)/startup_stm32f746xx.s
@@ -72,7 +83,11 @@ cxx_includes := \
 -I$(cube_dir)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
 -I$(cube_dir)/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
 -I$(cube_dir)/Drivers/CMSIS/Device/ST/STM32F7xx/Include \
--I$(cube_dir)/Drivers/CMSIS/Include
+-I$(cube_dir)/Drivers/CMSIS/Include \
+-I$(cube_dir)/USB_DEVICE/App \
+-I$(cube_dir)/USB_DEVICE/Target \
+-I$(cube_dir)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
+-I$(cube_dir)/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
 
 # Defines
 cxx_defs := \

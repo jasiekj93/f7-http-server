@@ -53,7 +53,6 @@
      PG11   ------> ETH_TX_EN
      PJ13   ------> LTDC_B1
      PD0   ------> FMC_D2_DA2
-     PA12   ------> USB_OTG_FS_DP
      PI4   ------> SAI2_MCLK_A
      PK7   ------> LTDC_DE
      PK6   ------> LTDC_B7
@@ -63,7 +62,6 @@
      PJ14   ------> LTDC_B2
      PD3   ------> DCMI_D5
      PD1   ------> FMC_D3_DA3
-     PA11   ------> USB_OTG_FS_DM
      PF0   ------> FMC_A0
      PI5   ------> SAI2_SCK_A
      PI7   ------> SAI2_FS_A
@@ -73,7 +71,6 @@
      PG9   ------> DCMI_VSYNC
      PJ15   ------> LTDC_B3
      PI1   ------> SPI2_SCK
-     PA10   ------> USB_OTG_FS_ID
      PF1   ------> FMC_A1
      PI9   ------> LTDC_VSYNC
      PH14   ------> DCMI_D4
@@ -355,14 +352,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : OTG_FS_P_Pin OTG_FS_N_Pin OTG_FS_ID_Pin */
-  GPIO_InitStruct.Pin = OTG_FS_P_Pin|OTG_FS_N_Pin|OTG_FS_ID_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SAI2_MCLKA_Pin SAI2_SCKA_Pin SAI2_FSA_Pin SAI2_SDA_Pin */
   GPIO_InitStruct.Pin = SAI2_MCLKA_Pin|SAI2_SCKA_Pin|SAI2_FSA_Pin|SAI2_SDA_Pin;
