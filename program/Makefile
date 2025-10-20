@@ -53,6 +53,7 @@ $(cube_dir)/Middlewares/Third_Party/FatFs/src/diskio.c \
 $(cube_dir)/Middlewares/Third_Party/FatFs/src/ff.c \
 $(cube_dir)/Middlewares/Third_Party/FatFs/src/ff_gen_drv.c \
 $(cube_dir)/Middlewares/Third_Party/FatFs/src/option/syscall.c \
+$(cube_dir)/Middlewares/Third_Party/FatFs/src/option/ccsbcs.c \
 $(cube_dir)/Core/Src/sysmem.c \
 $(cube_dir)/Core/Src/syscalls.c  
 

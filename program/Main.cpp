@@ -2,6 +2,12 @@
 #include "fatfs.h"
 #include "sdmmc.h"
 #include "gpio.h"
+#include "ff.h"
+
+#include <cstring>
+#include <cstdio>
+
+static void readContent(const char* path, int recurencyLevel = 1);
 
 int main(void)
 {
@@ -12,10 +18,82 @@ int main(void)
     MX_SDMMC1_SD_Init();
     MX_FATFS_Init();
     
+    if(f_mount(&SDFatFS, (const TCHAR*)SDPath, 0) != FR_OK)
+        Error_Handler();
+
+    readContent("");
+
     while (1)
     {
     }
 }
+
+static void readContent(const char* path, int recurencyLevel)
+{
+    DIR directory;
+    auto result = f_opendir(&directory, (const TCHAR*)path);
+
+    if(result != FR_OK)
+    {
+        if(result == FR_NO_FILESYSTEM)
+        {
+            char buffer[1024];
+            result = f_mkfs((const TCHAR*)path, FM_EXFAT, 0, buffer, sizeof(buffer));
+
+            if(result != FR_OK)
+                Error_Handler();
+        }
+        else
+            Error_Handler();
+    }
+
+    FILINFO fileInfo;
+
+    while (true)
+    {
+        if(FRESULT result = f_readdir(&directory, &fileInfo); result != FR_OK or fileInfo.fname[0] == '\0')
+            break;
+
+        if(fileInfo.fname[0] == '.')
+            continue;
+
+        auto* fileName = fileInfo.fname;
+        char tmp[30];
+        auto index = 0;
+        while(fileName[index] != 0)
+        {
+            tmp[index] = (char)(fileName[index]); 
+            ++index;
+        }
+
+        if(recurencyLevel == 1)
+        {
+            printf("   |__");
+        }
+        else if(recurencyLevel == 2)
+        {
+            printf("   |   |__");
+        }
+
+        if((fileInfo.fattrib & AM_DIR) == AM_DIR)
+        {
+            strcat(tmp, "\n");
+            printf("%s", tmp);
+            readContent((const char*)fileName, 2);
+        }
+        else
+        {
+            strcat(tmp, "\n");
+            printf("%s", tmp);
+        }
+
+        if(((fileInfo.fattrib & AM_DIR) == AM_DIR) and (recurencyLevel == 2))
+            readContent((const char*)fileName, 2);
+    }
+
+    f_closedir(&directory);
+}
+
 
 extern "C" 
 {

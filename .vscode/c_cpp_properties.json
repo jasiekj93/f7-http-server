@@ -3,9 +3,16 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/cube/Drivers/STM32F7xx_HAL_Driver/Inc",
+                "${workspaceFolder}/cube/Drivers/CMSIS/Device/ST/STM32F7xx/Include",
+                "${workspaceFolder}/cube/Middlewares/Third_Party/FatFs/src",
+                "${workspaceFolder}/cube/FATFS/Target"
             ],
-            "defines": ["DUSE_HAL_DRIVER", "STM32F746xx"],
+            "defines": [
+                "DUSE_HAL_DRIVER",
+                "STM32F746xx"
+            ],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
             "intelliSenseMode": "linux-gcc-x64"

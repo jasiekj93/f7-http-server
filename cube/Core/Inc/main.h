@@ -79,8 +79,6 @@ void SystemClock_Config(void);
 #define SWO_GPIO_Port GPIOB
 #define SPDIF_RX0_Pin GPIO_PIN_7
 #define SPDIF_RX0_GPIO_Port GPIOD
-#define SDMMC_CK_Pin GPIO_PIN_12
-#define SDMMC_CK_GPIO_Port GPIOC
 #define ARDUINO_PWM_D9_Pin GPIO_PIN_15
 #define ARDUINO_PWM_D9_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
@@ -111,10 +109,6 @@ void SystemClock_Config(void);
 #define Audio_INT_GPIO_Port GPIOD
 #define FMC_D2_Pin GPIO_PIN_0
 #define FMC_D2_GPIO_Port GPIOD
-#define SDMMC_D3_Pin GPIO_PIN_11
-#define SDMMC_D3_GPIO_Port GPIOC
-#define SDMMC_D2_Pin GPIO_PIN_10
-#define SDMMC_D2_GPIO_Port GPIOC
 #define OTG_FS_P_Pin GPIO_PIN_12
 #define OTG_FS_P_GPIO_Port GPIOA
 #define NC1_Pin GPIO_PIN_8
@@ -167,8 +161,6 @@ void SystemClock_Config(void);
 #define LCD_B3_GPIO_Port GPIOJ
 #define OTG_FS_OverCurrent_Pin GPIO_PIN_4
 #define OTG_FS_OverCurrent_GPIO_Port GPIOD
-#define SDMMC_D0_Pin GPIO_PIN_2
-#define SDMMC_D0_GPIO_Port GPIOD
 #define TP3_Pin GPIO_PIN_15
 #define TP3_GPIO_Port GPIOH
 #define ARDUINO_SCK_D13_Pin GPIO_PIN_1
