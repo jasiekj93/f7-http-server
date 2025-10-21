@@ -7,7 +7,13 @@
                 "${workspaceFolder}/cube/Drivers/STM32F7xx_HAL_Driver/Inc",
                 "${workspaceFolder}/cube/Drivers/CMSIS/Device/ST/STM32F7xx/Include",
                 "${workspaceFolder}/cube/Middlewares/Third_Party/FatFs/src",
-                "${workspaceFolder}/cube/FATFS/Target"
+                "${workspaceFolder}/cube/FATFS/Target",
+                "${workspaceFolder}/cube/USB_DEVICE/App",
+                "${workspaceFolder}/cube/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
+                "${workspaceFolder}/cube/Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
+                "${workspaceFolder}/cube/LWIP/App",
+                "${workspaceFolder}/cube/Middlewares/Third_Party/LwIP/src/include",
+                "${workspaceFolder}/cube/Middlewares/Third_Party/LwIP/system"
             ],
             "defines": [
                 "DUSE_HAL_DRIVER",

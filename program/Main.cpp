@@ -5,6 +5,8 @@
 #include "ff.h"
 #include "usb_device.h"
 #include "usbd_cdc_if.h"
+#include "lwip.h"
+#include "lwip/apps/httpd.h"
 
 #include <cstring>
 #include <cstdio>
@@ -21,16 +23,18 @@ int main(void)
     MX_SDMMC1_SD_Init();
     MX_FATFS_Init();
     MX_USB_DEVICE_Init();
-    
+    MX_LWIP_Init();
+    httpd_init();
 
     HAL_Delay(1000);
     if(f_mount(&SDFatFS, (const TCHAR*)SDPath, 0) != FR_OK)
         Error_Handler();
 
-    readContent("");
+    // readContent("");
 
     while (1)
     {
+        MX_LWIP_Process();
     }
 }
 

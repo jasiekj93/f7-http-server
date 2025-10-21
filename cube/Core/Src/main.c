@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "fatfs.h"
+#include "lwip.h"
 #include "sdmmc.h"
 #include "usb_device.h"
 #include "gpio.h"
@@ -96,6 +97,7 @@ int main(void)
   MX_SDMMC1_SD_Init();
   MX_FATFS_Init();
   MX_USB_DEVICE_Init();
+  MX_LWIP_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
