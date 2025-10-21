@@ -1,17 +1,131 @@
+<!--#set var="HTTP_CONNECTION" value="keep-alive" -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Connection" content="keep-alive">
     <title>STM32F7 HTTP Server - Home</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f4f4f4; 
+            line-height: 1.6;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background-color: white; 
+            min-height: 100vh; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .content { 
+            padding: 20px; 
+        }
+        .welcome-section { 
+            background-color: #ecf0f1; 
+            padding: 20px; 
+            border-radius: 5px; 
+            margin: 20px 0; 
+            border-left: 4px solid #3498db;
+        }
+        .welcome-section h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .welcome-section h3 {
+            color: #34495e;
+        }
+        .welcome-section ul {
+            padding-left: 20px;
+        }
+        .welcome-section li {
+            margin: 8px 0;
+        }
+        .welcome-section a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .welcome-section a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .status-info { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+            margin: 20px 0; 
+        }
+        .status-card { 
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white; 
+            padding: 15px; 
+            border-radius: 5px; 
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .status-card h3 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+        .file-browser { 
+            background-color: #f8f9fa; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+        }
+        .file-browser h3 {
+            color: #495057;
+            margin-top: 0;
+        }
+        pre { 
+            background-color: #2c3e50; 
+            color: #ecf0f1; 
+            padding: 15px; 
+            border-radius: 5px; 
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-
+        <!-- Include header -->
+        <!--#include file="header.shtml" -->
         
         <div class="content">
             <div class="welcome-section">
                 <h2>Welcome to STM32F7 HTTP Server</h2>
                 <p>This is a lightweight HTTP server running on STM32F746 microcontroller using LwIP stack.</p>
+                <p>The server provides real-time system information and file serving capabilities with modern web technologies.</p>
+            </div>
+
+            <div class="status-info">
+                <div class="status-card">
+                    <h3>Server Status</h3>
+                    <p><!--#echo var="SERVER_STATUS" --></p>
+                </div>
+                <div class="status-card">
+                    <h3>Uptime</h3>
+                    <p><!--#echo var="UPTIME" --></p>
+                </div>
+                <div class="status-card">
+                    <h3>Free Memory</h3>
+                    <p><!--#echo var="FREE_MEMORY" --></p>
+                </div>
+                <div class="status-card">
+                    <h3>IP Address</h3>
+                    <p><!--#echo var="IP_ADDRESS" --></p>
+                </div>
+            </div>
+
+            <div class="file-browser">
+                <h3>File System Browser</h3>
+                <pre><!--#exec cmd="ls" --></pre>
             </div>
 
             <div class="welcome-section">
@@ -19,10 +133,14 @@
                 <ul>
                     <li><a href="/">Home (this page)</a></li>
                     <li><a href="/404.html">404 Error Page</a></li>
+                    <li><a href="/status.shtml">System Status</a></li>
                     <li><a href="/nonexistent">Test 404 Page</a></li>
                 </ul>
             </div>
         </div>
+
+        <!-- Include footer -->
+        <!--#include file="footer.shtml" -->
     </div>
 </body>
 </html>
