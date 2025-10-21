@@ -1,0 +1,4 @@
+<footer style="background-color: #34495e; color: white; padding: 15px; text-align: center; margin-top: 40px;">
+    <p>&copy; 2025 STM32F7 HTTP Server. Built with LwIP.</p>
+    <p>System Time: <!--#echo var="DATE_LOCAL" --></p>
+</footer>

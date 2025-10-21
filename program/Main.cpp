@@ -7,11 +7,14 @@
 #include "usbd_cdc_if.h"
 #include "lwip.h"
 #include "lwip/apps/httpd.h"
+#include "fs.h"
 
 #include <cstring>
 #include <cstdio>
+#include <algorithm>
 
 static void readContent(const char* path, int recurencyLevel = 1);
+static void readFile(const char* path);
 
 int main(void)
 {
@@ -29,8 +32,9 @@ int main(void)
     HAL_Delay(1000);
     if(f_mount(&SDFatFS, (const TCHAR*)SDPath, 0) != FR_OK)
         Error_Handler();
-
+    
     // readContent("");
+    // readFile("index.shtml");
 
     while (1)
     {
@@ -105,6 +109,58 @@ static void readContent(const char* path, int recurencyLevel)
     f_closedir(&directory);
 }
 
+static void readFile(const char* path)
+{
+    FIL file;
+    DIR directory;
+
+    // auto result = f_opendir(&directory, (const TCHAR*)"");
+
+    // if(result != FR_OK)
+        // Error_Handler();
+
+
+    char bufferName[256] = "/index.shtml";
+    TCHAR bufferTchar[256];
+
+    for(auto i = 0; i < strlen(bufferName) + 1; ++i)
+        bufferTchar[i] = ff_convert(bufferName[i], 1);
+
+    // result = f_open(&file, bufferTchar, FA_CREATE_ALWAYS | FA_WRITE);
+    // result = f_open(&file, (const TCHAR*)path, FA_READ);
+    auto result = f_stat(bufferTchar, nullptr);
+
+    if(result != FR_OK)
+        Error_Handler();
+
+    result = f_open(&file, bufferTchar, FA_READ);
+
+    if(result != FR_OK)
+        Error_Handler();
+    
+    char buffer[256];
+    UINT bytesRead = 0; 
+
+    do
+    {
+        result = f_read(&file, buffer, sizeof(buffer) - 1, &bytesRead);
+        if(result != FR_OK)
+            Error_Handler();
+
+        buffer[bytesRead] = '\0';
+        printf("%s", buffer);
+    } while(bytesRead > 0);
+
+    // const char* text = "Hello from STM32F7!\r\nThis is a test file.\r\n";
+    // UINT bytesWritten = 0;
+    // result = f_write(&file, text, strlen(text), &bytesWritten);
+    // if(result != FR_OK || bytesWritten != strlen(text))
+    //     Error_Handler();
+
+    f_close(&file);
+    // f_closedir(&directory);
+}
+
 
 extern "C" 
 {
@@ -113,6 +169,77 @@ extern "C"
         (void)file;
         CDC_Transmit_FS((uint8_t*)ptr, len);
         return len;
+    }
+
+    int fs_open_custom(struct fs_file *file, const char *name)
+    {
+        FRESULT fres;    
+        FIL* fatFile = new FIL();
+        TCHAR buffer[256];
+
+        std::transform(name, name + strlen(name) + 1, buffer, [](char c) { return ff_convert(c, 1); });
+        // for(auto i = 0; i < strlen(name) + 1; ++i)
+            // buffer[i] = ff_convert(name[i], 1);
+
+        // const char* namePtr = name;
+        // if(namePtr[0] == '/')
+            // ++namePtr;
+
+        // strncpy(buffer, namePtr, sizeof(buffer) - 1);
+        // buffer[sizeof(buffer) - 1] = '\0';
+
+        fres = f_open(fatFile, buffer, FA_OPEN_EXISTING | FA_READ);
+
+        if(fres != FR_OK)
+            return 0;
+
+        file->data = NULL;
+        file->len = f_size(fatFile);
+        file->index = 0;
+        file->pextension = fatFile;
+
+        return 1;
+    }
+
+    void fs_close_custom(struct fs_file *file)
+    {
+        if(file->pextension == NULL)
+            return;
+
+        FIL* fatFile = (FIL*)file->pextension;
+        f_close(fatFile); 
+        delete fatFile;
+    }
+
+    int fs_read_custom(struct fs_file *file, char *buffer, int count)
+    {
+        FIL* fatFile = (FIL*)file->pextension;
+
+        if(f_eof(fatFile))
+            return FS_READ_EOF;
+
+        if(file->index < (file->len))    
+        {        
+            UINT bytesRead = 0;
+
+            if (f_read(fatFile, buffer, count, &bytesRead) == FR_OK)        
+                return bytesRead;   
+            else    
+                return FS_READ_EOF;
+        }    
+        else    
+            return FS_READ_EOF;
+    }
+
+    void* fs_state_init(struct fs_file *file, const char *name)
+    {
+        //Pozostaw specjalnie puste
+        return NULL;
+    }
+
+    void fs_state_free(struct fs_file *file, void *state)
+    {
+        //Pozostaw specjalnie puste
     }
 
     void SystemClock_Config(void)

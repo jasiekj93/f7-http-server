@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>STM32F7 HTTP Server - Home</title>
+</head>
+<body>
+    <div class="container">
+
+        
+        <div class="content">
+            <div class="welcome-section">
+                <h2>Welcome to STM32F7 HTTP Server</h2>
+                <p>This is a lightweight HTTP server running on STM32F746 microcontroller using LwIP stack.</p>
+            </div>
+
+            <div class="welcome-section">
+                <h3>Available Pages</h3>
+                <ul>
+                    <li><a href="/">Home (this page)</a></li>
+                    <li><a href="/404.html">404 Error Page</a></li>
+                    <li><a href="/nonexistent">Test 404 Page</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

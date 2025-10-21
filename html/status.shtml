@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>STM32F7 HTTP Server - Status</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .container { max-width: 1200px; margin: 0 auto; background-color: white; min-height: 100vh; }
+        .content { padding: 20px; }
+        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .status-section { background-color: #ecf0f1; padding: 20px; border-radius: 5px; }
+        .metric { display: flex; justify-content: space-between; margin: 10px 0; }
+        .metric-value { font-weight: bold; color: #2c3e50; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Include header -->
+        <!--#include file="header.shtml" -->
+        
+        <div class="content">
+            <h2>System Status</h2>
+            
+            <div class="status-grid">
+                <div class="status-section">
+                    <h3>System Information</h3>
+                    <div class="metric">
+                        <span>MCU:</span>
+                        <span class="metric-value">STM32F746NGH6</span>
+                    </div>
+                    <div class="metric">
+                        <span>Flash Size:</span>
+                        <span class="metric-value">1MB</span>
+                    </div>
+                    <div class="metric">
+                        <span>RAM Size:</span>
+                        <span class="metric-value">320KB</span>
+                    </div>
+                    <div class="metric">
+                        <span>Clock Frequency:</span>
+                        <span class="metric-value">216MHz</span>
+                    </div>
+                </div>
+
+                <div class="status-section">
+                    <h3>Network Status</h3>
+                    <div class="metric">
+                        <span>IP Address:</span>
+                        <span class="metric-value"><!--#echo var="IP_ADDRESS" --></span>
+                    </div>
+                    <div class="metric">
+                        <span>MAC Address:</span>
+                        <span class="metric-value"><!--#echo var="MAC_ADDRESS" --></span>
+                    </div>
+                    <div class="metric">
+                        <span>Gateway:</span>
+                        <span class="metric-value"><!--#echo var="GATEWAY" --></span>
+                    </div>
+                    <div class="metric">
+                        <span>DNS Server:</span>
+                        <span class="metric-value"><!--#echo var="DNS_SERVER" --></span>
+                    </div>
+                </div>
+
+                <div class="status-section">
+                    <h3>Memory Usage</h3>
+                    <div class="metric">
+                        <span>Free Heap:</span>
+                        <span class="metric-value"><!--#echo var="FREE_HEAP" --></span>
+                    </div>
+                    <div class="metric">
+                        <span>Used Heap:</span>
+                        <span class="metric-value"><!--#echo var="USED_HEAP" --></span>
+                    </div>
+                    <div class="metric">
+                        <span>Stack Usage:</span>
+                        <span class="metric-value"><!--#echo var="STACK_USAGE" --></span>
+                    </div>
+                </div>
+
+                <div class="status-section">
+                    <h3>Server Statistics</h3>
+                    <div class="metric">
+                        <span>Uptime:</span>
+                        <span class="metric-value"><!--#echo var="UPTIME" --></span>
+                    </div>
+                    <div class="metric">
+                        <span>Requests Served:</span>
+                        <span class="metric-value"><!--#echo var="REQUEST_COUNT" --></span>
+                    </div>
+                    <div class="metric">
+                        <span>Active Connections:</span>
+                        <span class="metric-value"><!--#echo var="ACTIVE_CONNECTIONS" --></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Include footer -->
+        <!--#include file="footer.shtml" -->
+    </div>
+</body>
+</html>
