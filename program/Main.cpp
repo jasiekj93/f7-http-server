@@ -15,6 +15,17 @@
 
 static void readContent(const char* path, int recurencyLevel = 1);
 static void readFile(const char* path);
+extern "C" { static u16_t ssiHandler(int iIndex, char *pcInsert, int iInsertLen, void *connection_state); }
+
+static const char* ppcTags[] = {
+    "SERVER_STATUS",
+    "UPTIME",
+    "FREE_MEMORY",
+    "IP_ADDRESS",
+    "LS"
+};
+
+static constexpr size_t ppcTagsCount = sizeof(ppcTags) / sizeof(ppcTags[0]);
 
 int main(void)
 {
@@ -28,6 +39,7 @@ int main(void)
     MX_USB_DEVICE_Init();
     MX_LWIP_Init();
     httpd_init();
+    http_set_ssi_handler(ssiHandler, ppcTags, ppcTagsCount);
 
     HAL_Delay(1000);
     if(f_mount(&SDFatFS, (const TCHAR*)SDPath, 0) != FR_OK)
@@ -164,6 +176,38 @@ static void readFile(const char* path)
 
 extern "C" 
 {
+    static u16_t ssiHandler(int iIndex, char *pcInsert, int iInsertLen, void *connection_state)
+    {
+        switch(iIndex)
+        {
+            case 0: // SERVER_STATUS
+                return (u16_t) snprintf(pcInsert, iInsertLen, "Running");
+            case 1: // UPTIME
+                return (u16_t) snprintf(pcInsert, iInsertLen, "%lu seconds", HAL_GetTick() / 1000);
+            case 2: // FREE_MEMORY
+                return (u16_t) snprintf(pcInsert, iInsertLen, "%u bytes", 1024);
+            case 3: // IP_ADDRESS
+            {
+                struct netif* netif = netif_list;
+                if(netif != NULL)
+                {
+                    auto ipAddr = netif->ip_addr;
+                    return (u16_t) snprintf(pcInsert, iInsertLen, "%d.%d.%d.%d", ip4_addr1(&ipAddr), ip4_addr2(&ipAddr), ip4_addr3(&ipAddr), ip4_addr4(&ipAddr));
+                }
+                else
+                {
+                    return (u16_t) snprintf(pcInsert, iInsertLen, "Not connected");
+                }
+            }
+            case 4: // LS
+                return (u16_t) snprintf(pcInsert, iInsertLen, "LS: niedlugo bedzie");
+                break;
+            default:
+                break;
+        }
+        return 0;
+    }
+
     int _write(int file, char *ptr, int len)
     {
         (void)file;
@@ -178,16 +222,6 @@ extern "C"
         TCHAR buffer[256];
 
         std::transform(name, name + strlen(name) + 1, buffer, [](char c) { return ff_convert(c, 1); });
-        // for(auto i = 0; i < strlen(name) + 1; ++i)
-            // buffer[i] = ff_convert(name[i], 1);
-
-        // const char* namePtr = name;
-        // if(namePtr[0] == '/')
-            // ++namePtr;
-
-        // strncpy(buffer, namePtr, sizeof(buffer) - 1);
-        // buffer[sizeof(buffer) - 1] = '\0';
-
         fres = f_open(fatFile, buffer, FA_OPEN_EXISTING | FA_READ);
 
         if(fres != FR_OK)
@@ -240,6 +274,28 @@ extern "C"
     void fs_state_free(struct fs_file *file, void *state)
     {
         //Pozostaw specjalnie puste
+    }
+
+    void httpd_cgi_handler(struct fs_file *file, const char* uri, int iNumParams,
+                              char **pcParam, char **pcValue, void *connection_state)
+    {
+        if (strcmp(uri, "/index.shtml") == 0)
+        {
+            // Example: Dynamic content generation
+            const char* response = "<html><body><h1>Hello, STM32F7!</h1></body></html>";
+            file->data = response;
+            file->len = strlen(response);
+            file->index = 0;
+            file->pextension = NULL; // No special extension needed
+        }
+        else
+        {
+            // Handle other URIs or set file to NULL for not found
+            file->data = NULL;
+            file->len = 0;
+            file->index = 0;
+            file->pextension = NULL;
+        }
     }
 
     void SystemClock_Config(void)

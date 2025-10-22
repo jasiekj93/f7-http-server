@@ -107,25 +107,25 @@
             <div class="status-info">
                 <div class="status-card">
                     <h3>Server Status</h3>
-                    <p><!--#echo var="SERVER_STATUS" --></p>
+                    <p><!--#SERVER_STATUS--></p>
                 </div>
                 <div class="status-card">
                     <h3>Uptime</h3>
-                    <p><!--#echo var="UPTIME" --></p>
+                    <p><!--#UPTIME--></p>
                 </div>
                 <div class="status-card">
                     <h3>Free Memory</h3>
-                    <p><!--#echo var="FREE_MEMORY" --></p>
+                    <p><!--#FREE_MEMORY--></p>
                 </div>
                 <div class="status-card">
                     <h3>IP Address</h3>
-                    <p><!--#echo var="IP_ADDRESS" --></p>
+                    <p><!--#IP_ADDRESS--></p>
                 </div>
             </div>
 
             <div class="file-browser">
                 <h3>File System Browser</h3>
-                <pre><!--#exec cmd="ls" --></pre>
+                <pre><!--#LS--></pre>
             </div>
 
             <div class="welcome-section">

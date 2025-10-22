@@ -85,6 +85,10 @@
 #define LWIP_HTTPD 1
 /*----- Default Value for LWIP_HTTPD_SSI: 0 ---*/
 #define LWIP_HTTPD_SSI 1
+/*----- Default Value for LWIP_HTTPD_MAX_TAG_NAME_LEN: 8 ---*/
+#define LWIP_HTTPD_MAX_TAG_NAME_LEN 16
+/*----- Default Value for LWIP_HTTPD_MAX_TAG_INSERT_LEN: 192 ---*/
+#define LWIP_HTTPD_MAX_TAG_INSERT_LEN 256
 /*----- Default Value for LWIP_HTTPD_SUPPORT_11_KEEPALIVE: 0 ---*/
 #define LWIP_HTTPD_SUPPORT_11_KEEPALIVE 1
 /*----- Default Value for LWIP_HTTPD_CUSTOM_FILES: 0 ---*/
