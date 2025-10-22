@@ -22,7 +22,11 @@ static const char* ppcTags[] = {
     "UPTIME",
     "FREE_MEMORY",
     "IP_ADDRESS",
-    "LS"
+    "LS",
+    "MAC_ADDRESS",
+    "GATEWAY",
+    "USED_HEAP",
+    "STACK_USAGE"
 };
 
 static constexpr size_t ppcTagsCount = sizeof(ppcTags) / sizeof(ppcTags[0]);
@@ -202,6 +206,44 @@ extern "C"
             case 4: // LS
                 return (u16_t) snprintf(pcInsert, iInsertLen, "LS: niedlugo bedzie");
                 break;
+            case 5: // MAC_ADDRESS
+            {
+                struct netif* netif = netif_list;
+                if(netif != NULL)
+                {
+                    auto mac = netif->hwaddr;
+                    return (u16_t) snprintf(pcInsert, iInsertLen, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+                }
+                else
+                {
+                    return (u16_t) snprintf(pcInsert, iInsertLen, "Not connected");
+                }
+            }
+            case 6: // GATEWAY
+            {
+                struct netif* netif = netif_list;
+                if(netif != NULL)
+                {
+                    auto gwAddr = netif->gw;
+                    return (u16_t) snprintf(pcInsert, iInsertLen, "%d.%d.%d.%d", ip4_addr1(&gwAddr), ip4_addr2(&gwAddr), ip4_addr3(&gwAddr), ip4_addr4(&gwAddr));
+                }
+                else
+                {
+                    return (u16_t) snprintf(pcInsert, iInsertLen, "Not connected");
+                }
+            }
+            case 7: // USED_HEAP
+            {
+                // Placeholder value; replace with actual heap usage retrieval
+                size_t usedHeap = 2048;
+                return (u16_t) snprintf(pcInsert, iInsertLen, "%u bytes", usedHeap);
+            }
+            case 8: // STACK_USAGE
+            {
+                // Placeholder value; replace with actual stack usage retrieval
+                size_t stackUsage = 512;
+                return (u16_t) snprintf(pcInsert, iInsertLen, "%u bytes", stackUsage);
+            }       
             default:
                 break;
         }
